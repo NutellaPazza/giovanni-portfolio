@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./components/Footer";
 import { MoneyTrail } from "./components/MoneyTrail";
 import { Navbar } from "./components/Navbar";
@@ -43,6 +44,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <Analytics />
     </>
   );
 }
