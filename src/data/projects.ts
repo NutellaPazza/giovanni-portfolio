@@ -25,8 +25,8 @@ export const projects: Project[] = [
     skills: ["Algorithmic trading", "Prediction markets", "BTC market data", "Backtesting", "Live trading"],
     collaborators: ["[Roommate / collaborator name]"],
     cover: {
-      src: "https://polymarket.com/images/brand/logo-black.png",
-      alt: "Polymarket official black wordmark",
+      src: "/polymarket-project-cover-bw.jpg",
+      alt: "Polymarket logo in black and white",
     },
   },
   {
