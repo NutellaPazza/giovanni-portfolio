@@ -1,13 +1,15 @@
 const hobbies = [
   {
     title: "Stories, cinema, comics, manga, anime, and games",
-    image: "https://picsum.photos/seed/cinema-games-manga-placeholder/1200/900",
+    image: "/about-mountain-original.jpg",
+    alt: "Giovanni De Stasio on a mountain summit",
     description:
       "I love cinema, and more broadly I love stories: fiction, true stories, imagined worlds, dragons, superheroes, manga, anime, comics, videogames, everything that lets a person enter another life for a while. Some people would call that nerdy. That is fine with me. If loving what I see as beauty and art makes me a nerd, then I would rather be the biggest nerd in history. Games belong to that same instinct for me: competitive, single-player, multiplayer. They are not an escape from life; they are a way of wanting to live more than one life. Super Smash Bros was a big part of my childhood, and I also played competitive tournaments when I was younger.",
   },
   {
     title: "Travel, mountains, sea, drawing, and sport",
-    image: "/mountain-summit-giovanni.jpg",
+    image: "/about-desert-horse-giovanni.jpg",
+    alt: "Giovanni De Stasio riding a horse in the desert",
     description:
       "One of my biggest dreams is to visit every country in the world: every culture, every food, every place that changes the way I look at things. I know it will take time, money, and trade-offs, but it is one of the things I want most. I also love drawing, skiing, hiking, being on a boat, swimming, and diving. That is the version of myself I want to keep building: curious, restless, and close to the things that make life feel larger.",
   },
@@ -54,7 +56,7 @@ export function About() {
         <div className="hobby-stack">
           {hobbies.map((hobby, index) => (
             <article className={index % 2 ? "hobby-row hobby-row--reverse" : "hobby-row"} key={hobby.title}>
-              <img src={hobby.image} alt={index === 1 ? "Giovanni De Stasio on the summit of a snowy mountain" : `Replaceable photograph for ${hobby.title}`} loading="lazy" />
+              <img src={hobby.image} alt={hobby.alt} loading="lazy" />
               <div>
                 <p className="eyebrow">Personal</p>
                 <h3>{hobby.title}</h3>
