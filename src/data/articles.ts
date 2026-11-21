@@ -27,6 +27,30 @@ export const articles: Article[] = [
     relatedProjects: [{ kind: "project", slug: "vix-strategy", title: "Systematic VIX Futures Risk Research" }],
   },
   {
+    id: "who-will-buy-the-debt",
+    slug: "who-will-buy-the-debt",
+    title: "Who Will Buy the Debt? The Global Bond Sell-Off and the New Price of Capital",
+    category: "Articles",
+    topic: "Debt Capital Markets",
+    date: "October 2026",
+    authors: ["Giovanni De Stasio"],
+    organization: "Vantedge",
+    readingTime: "Credit market flow report",
+    summary:
+      "DCM report on developed-market sovereigns and USD credit from 1 September to 6 October 2026: capital has not disappeared, but it has repriced. Borrowers still clear, at higher yields and shorter tenors.",
+    body: [
+      "The report follows the global bond sell-off of September and early October 2026, when the US 10-year Treasury yield rose 48bps to 5.27% and long-end yields jumped across the UK and the euro area.",
+      "It traces the move to an energy shock meeting resilient growth, which pushed both the Fed and the ECB to hike, while heavy Treasury and corporate supply arrived just as central banks stopped adding long-duration demand.",
+      "It then looks at where the shock landed: mostly in benchmark rates rather than investment-grade spreads, with the stress concentrated in CCC credit and in France's premium over Germany. The Paramount Skydance financing shows the pattern at deal level: strong demand for short maturities, weak demand for long bonds.",
+      "The report closes with what issuers should do now: treat waiting as a decision, pre-fund maturities in stages, and choose tenor for the business rather than for the coupon.",
+    ],
+    links: [
+      { label: "Read on Vantedge", href: "https://vantedgeorg.com/research" },
+      { label: "Open the report (PDF)", href: "https://vantedgeorg.com/static/reports/giovanni-dcm-credit-flow-oct2026.pdf" },
+    ],
+    relatedExperiences: [{ kind: "experience", slug: "vantaedge", title: "Vantedge" }],
+  },
+  {
     id: "hormuz-shock-market-transmission",
     slug: "hormuz-shock-market-transmission",
     title: "The 2026 Hormuz Shock and Its Market Transmission",

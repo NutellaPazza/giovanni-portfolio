@@ -31,7 +31,7 @@ export const skills: Skill[] = [
     category: "Finance",
     usedIn: [
       { kind: "project", slug: "asml-investment-research", title: "Selected Investment Research: ASML" },
-      { kind: "experience", slug: "vantaedge", title: "Vantaedge" },
+      { kind: "experience", slug: "vantaedge", title: "Vantedge" },
     ],
   },
   {

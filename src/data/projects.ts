@@ -89,6 +89,29 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "who-will-buy-the-debt",
+    slug: "who-will-buy-the-debt",
+    title: "Who Will Buy the Debt? The Global Bond Sell-Off and the New Price of Capital",
+    category: "Research",
+    year: "2026",
+    status: "Vantedge DCM report",
+    summary:
+      "Credit market flow report on developed-market sovereigns and USD credit, 1 September to 6 October 2026: borrowers still clear, but at higher yields and shorter tenors than they are used to.",
+    overview:
+      "Written as Head of DCM at Vantedge. It covers the macro and rates backdrop, supply, demand, spreads and relative value, notable deals, and what the new price of capital means for issuers.",
+    contribution:
+      "Sole author of the report.",
+    skills: ["Debt Capital Markets", "Credit", "Rates", "Fixed income research"],
+    links: [
+      { label: "Read on Vantedge", href: "https://vantedgeorg.com/research" },
+      { label: "Open the report (PDF)", href: "https://vantedgeorg.com/static/reports/giovanni-dcm-credit-flow-oct2026.pdf" },
+    ],
+    relatedArticles: [
+      { kind: "article", slug: "who-will-buy-the-debt", title: "Who Will Buy the Debt? The Global Bond Sell-Off and the New Price of Capital" },
+    ],
+    relatedExperiences: [{ kind: "experience", slug: "vantaedge", title: "Vantedge" }],
+  },
+  {
     id: "hormuz-shock-market-transmission",
     slug: "hormuz-shock-market-transmission",
     title: "The 2026 Hormuz Shock and Its Market Transmission",

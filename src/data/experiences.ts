@@ -26,7 +26,7 @@ export const experiences: Experience[] = [
   {
     id: "vantaedge",
     slug: "vantaedge",
-    organization: "Vantaedge",
+    organization: "Vantedge",
     role: "Co-Founder and Head of DCM",
     location: "International",
     startDate: "May 2026",
@@ -42,6 +42,9 @@ export const experiences: Experience[] = [
       "Contributed to a broader finance research structure across multiple workstreams.",
     ],
     skills: ["Debt Capital Markets", "Investment Research", "Market Analysis", "Leadership"],
+    relatedArticles: [
+      { kind: "article", slug: "who-will-buy-the-debt", title: "Who Will Buy the Debt? The Global Bond Sell-Off and the New Price of Capital" },
+    ],
   },
   {
     id: "bocconi-quant-finance",
