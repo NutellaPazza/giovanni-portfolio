@@ -42,10 +42,6 @@ export const experiences: Experience[] = [
       "Contributed to a broader finance research structure across multiple workstreams.",
     ],
     skills: ["Debt Capital Markets", "Investment Research", "Market Analysis", "Leadership"],
-    relatedArticles: [
-      { kind: "article", slug: "dcm-research-placeholder", title: "[Vantaedge DCM research article]" },
-      { kind: "article", slug: "equity-research-placeholder", title: "[Vantaedge equity research article]" },
-    ],
   },
   {
     id: "bocconi-quant-finance",

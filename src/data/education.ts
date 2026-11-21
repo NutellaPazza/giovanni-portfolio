@@ -24,7 +24,7 @@ export const education: Education[] = [
     institution: "Luigi Garofano Scientific High School",
     program: "Scientific High School",
     location: "Italy",
-    startDate: "[Start date]",
+    startDate: "",
     endDate: "2025",
     description:
       "Graduated at 17, two years before the Italian average.",

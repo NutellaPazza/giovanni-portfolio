@@ -13,7 +13,7 @@ export function Education() {
             <article className="education-entry" key={entry.id}>
               <div>
                 <p className="eyebrow">
-                  {entry.startDate} to {entry.endDate}
+                  {entry.startDate ? `${entry.startDate} to ${entry.endDate}` : entry.endDate}
                 </p>
                 <h2>{entry.institution}</h2>
                 <p>

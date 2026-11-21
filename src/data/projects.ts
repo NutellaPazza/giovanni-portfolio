@@ -23,7 +23,6 @@ export const projects: Project[] = [
     learned:
       "The useful story is probability, discipline, sample-size caution, live execution, and short-horizon market structure, not a claim of guaranteed alpha.",
     skills: ["Algorithmic trading", "Prediction markets", "BTC market data", "Backtesting", "Live trading"],
-    collaborators: ["[Roommate / collaborator name]"],
     cover: {
       src: "/polymarket-project-cover-bw.jpg",
       alt: "Polymarket logo in black and white",
@@ -55,6 +54,8 @@ export const projects: Project[] = [
     learned:
       "The strategy showed meaningful stress-period behaviour: across the versions, max drawdown stayed below S&P 500 buy and hold, and in 2022 the strategy stayed flat or slightly positive while the S&P 500 lost around 19%. The result is interesting as a portfolio component, but still needs further robustness checks, live assumptions, and risk work.",
     skills: ["Python", "VIX futures", "Backtesting", "Mean reversion", "Risk analysis"],
+    links: [{ label: "Research write-up on GitHub", href: "https://github.com/NutellaPazza/vix-futures-strategy" }],
+    relatedArticles: [{ kind: "article", slug: "vix-research", title: "Systematic VIX Strategy Research" }],
     cover: {
       src: "/vx2-dashboard-backtest-3.png",
       alt: "VX2 accumulation strategy backtest 3 dashboard",
