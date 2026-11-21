@@ -14,6 +14,8 @@ import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { ProjectDetail } from "./pages/ProjectDetail";
 import { Projects } from "./pages/Projects";
+import { Research } from "./pages/Research";
+import { Ventures } from "./pages/Ventures";
 
 function ScrollToTop() {
   const location = useLocation();
@@ -46,6 +48,8 @@ export default function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/projects/research/:slug" element={<ArticleDetail />} />
+          <Route path="/research" element={<Research />} />
+          <Route path="/ventures" element={<Ventures />} />
           <Route path="/education" element={<Education />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

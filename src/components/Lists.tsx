@@ -1,5 +1,4 @@
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
 import { experiences } from "../data/experiences";
 import { ventures } from "../data/ventures";
@@ -8,70 +7,25 @@ import type { Article, Project } from "../types";
 const typeLabel = (category: Project["category"]) =>
   category === "Projects" ? "Build" : category === "Hackathons" ? "Hackathon" : "Research";
 
-/**
- * Selected work. On devices with a fine pointer the project's cover follows the cursor
- * while a row is hovered; the image is only a preview, the row is the link.
- */
+/** Work as a numbered list. Hovering a row brings it forward and dims the others. */
 export function WorkList({ projects }: { projects: Project[] }) {
-  const previewRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState<string | null>(null);
-  const target = useRef({ x: 0, y: 0 });
-  const current = useRef({ x: 0, y: 0 });
-  const frame = useRef(0);
-
-  const canPreview =
-    typeof window !== "undefined" &&
-    window.matchMedia("(pointer: fine)").matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  useEffect(() => () => cancelAnimationFrame(frame.current), []);
-
-  const follow = () => {
-    // Ease toward the pointer so the preview trails slightly behind it.
-    current.current.x += (target.current.x - current.current.x) * 0.18;
-    current.current.y += (target.current.y - current.current.y) * 0.18;
-    previewRef.current?.style.setProperty("--x", `${current.current.x}px`);
-    previewRef.current?.style.setProperty("--y", `${current.current.y}px`);
-    if (Math.abs(target.current.x - current.current.x) + Math.abs(target.current.y - current.current.y) > 0.5) {
-      frame.current = requestAnimationFrame(follow);
-    } else {
-      frame.current = 0;
-    }
-  };
-
-  const onMove = (event: PointerEvent) => {
-    if (!canPreview) return;
-    target.current = { x: event.clientX + 28, y: event.clientY - 110 };
-    if (!active) current.current = { ...target.current };
-    if (!frame.current) frame.current = requestAnimationFrame(follow);
-  };
-
-  const cover = projects.find((p) => p.id === active)?.cover;
-
   return (
-    <>
-      <ul className="work" onPointerMove={onMove} onPointerLeave={() => setActive(null)}>
-        {projects.map((project, i) => (
-          <li key={project.id} className="work-row" onPointerEnter={() => setActive(project.cover ? project.id : null)}>
-            <span className="work-index">{String(i + 1).padStart(2, "0")}</span>
-            <span>
-              <Link to={`/projects/${project.slug}`} className="work-title stretch">
-                {project.title}
-              </Link>
-              <span className="work-sub">{project.summary}</span>
-            </span>
-            <span className="work-meta">{typeLabel(project.category)}</span>
-            <span className="work-year">{project.year}</span>
-            <ArrowTopRightIcon className="work-arrow" aria-hidden="true" />
-          </li>
-        ))}
-      </ul>
-      {canPreview && (
-        <div ref={previewRef} className="work-preview" data-on={!!cover} aria-hidden="true">
-          {cover && <img src={cover.src} alt="" />}
-        </div>
-      )}
-    </>
+    <ul className="work">
+      {projects.map((project, i) => (
+        <li key={project.id} className="work-row">
+          <span className="work-index">{String(i + 1).padStart(2, "0")}</span>
+          <span>
+            <Link to={`/projects/${project.slug}`} className="work-title stretch">
+              {project.title}
+            </Link>
+            <span className="work-sub">{project.summary}</span>
+          </span>
+          <span className="work-meta">{typeLabel(project.category)}</span>
+          <span className="work-year">{project.year}</span>
+          <ArrowTopRightIcon className="work-arrow" aria-hidden="true" />
+        </li>
+      ))}
+    </ul>
   );
 }
 

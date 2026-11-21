@@ -22,14 +22,16 @@ OKLCH tokens in `src/styles.css`. Strategy: Restrained.
 ## Layout
 
 - `.wrap` sets equal edges. Sections are separated by hairlines, with generous vertical rhythm.
-- Work is a numbered list, not a card grid; hovering a row floats its cover next to the cursor.
+- The home page is short: the hero (with LinkedIn, GitHub and email visible at once) and an index of four sections. Work, Research, Ventures and Experience each have their own page.
+- Work is a numbered list, not a card grid; hovering a row brings it forward and dims the others.
 - Research is a hairline grid of papers; ventures are three outlined panels; experience is a timeline list.
 - Detail pages use a report layout: a mono label column on the left, prose on the right.
 
 ## Motion
 
-- **Intro** (home page, first visit per session, never under reduced motion): a black terminal types the ticker GDS, a lookup row resolves it to Giovanni De Stasio, Enter (or the Open button) confirms it, a hairline runs, the overlay lifts away and the hero enters. Key clicks are synthesised with WebAudio and play once the visitor has pressed a key or tapped. Skip and Escape end it at once.
-- **Hero** entrance: one staggered rise, held until the intro has gone.
+- **Intro** (home page, first visit per session, never under reduced motion): a black terminal types the ticker GDS, a lookup row resolves it to Giovanni De Stasio, Enter (or the Open button) confirms it, and the black screen dissolves into characters from the centre outward, revealing the site while the hero enters. Faint falling glyphs fill the background while the ticker is typed. Key clicks are synthesised with WebAudio and play once the visitor has pressed a key or tapped. Skip and Escape end it at once.
+- **Hero** entrance: one staggered rise, released when the dissolve starts.
+- **Portrait**: hovering the photo opens an ASCII lens: the area under the cursor is redrawn as characters from the photo's own brightness.
 - **Dollar trail**: dollar signs follow a fine pointer, inherit some of its velocity, fall and fade; a click releases a small burst. Pooled elements, one requestAnimationFrame loop that stops when idle.
 - **Hover**: list rows dim their siblings and slide, arrows move up-right, buttons press on click, links draw an underline, photos zoom slightly.
 - All entrances use backwards fill, so content is visible even if animations never run. Under `prefers-reduced-motion` everything is static.

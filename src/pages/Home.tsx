@@ -1,15 +1,51 @@
-import { ArrowRightIcon, DownloadIcon, EnvelopeClosedIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, ArrowTopRightIcon, EnvelopeClosedIcon, GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { PaperGrid, Timeline, VentureGrid, WorkList } from "../components/Lists";
+import { AsciiPortrait } from "../components/AsciiPortrait";
 import { articles } from "../data/articles";
+import { experiences } from "../data/experiences";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
+import { ventures } from "../data/ventures";
 
-const linkedIn = profile.social.find((item) => item.label === "LinkedIn")?.href;
 const delay = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
+const social = (label: string) => profile.social.find((item) => item.label === label)?.href;
+
+const index = [
+  {
+    href: "/projects",
+    title: "Work",
+    text: "Trading systems, apps and hackathon builds.",
+    count: projects.length,
+    unit: "projects",
+  },
+  {
+    href: "/research",
+    title: "Research",
+    text: "Papers and reports on debt markets, energy shocks and volatility.",
+    count: articles.length,
+    unit: "papers",
+  },
+  {
+    href: "/ventures",
+    title: "Ventures",
+    text: "Vantedge, Vault Capital and AI Campus Navigator.",
+    count: ventures.length,
+    unit: "ventures",
+  },
+  {
+    href: "/experiences",
+    title: "Experience",
+    text: "Roles, associations and the IMC Prosperity 4 final.",
+    count: experiences.length,
+    unit: "roles",
+  },
+];
 
 export function Home() {
+  const linkedIn = social("LinkedIn");
+  const github = social("GitHub");
+
   return (
     <>
       <section className="hero wrap" aria-labelledby="hero-title">
@@ -33,15 +69,33 @@ export function Home() {
                 See my work
                 <ArrowRightIcon aria-hidden="true" />
               </Link>
-              <a className="btn btn--ghost" href={profile.email}>
-                Get in touch
+              <a className="btn btn--ghost" href={profile.cvPath} download>
+                Download CV
               </a>
             </div>
+            <nav className="socials" aria-label="Profiles" style={delay(340)}>
+              {linkedIn && (
+                <a href={linkedIn} target="_blank" rel="noreferrer">
+                  <LinkedInLogoIcon aria-hidden="true" />
+                  LinkedIn
+                </a>
+              )}
+              {github && (
+                <a href={github} target="_blank" rel="noreferrer">
+                  <GitHubLogoIcon aria-hidden="true" />
+                  GitHub
+                </a>
+              )}
+              <a href={profile.email}>
+                <EnvelopeClosedIcon aria-hidden="true" />
+                Email
+              </a>
+            </nav>
           </div>
           <div data-enter>
-            <figure className="portrait" style={delay(160)}>
-              <img src="/giovanni-home-portrait.jpg" alt="Giovanni De Stasio in a dark suit and tie" />
-            </figure>
+            <div style={delay(160)}>
+              <AsciiPortrait src="/giovanni-home-portrait.jpg" alt="Giovanni De Stasio in a dark suit and tie" />
+            </div>
           </div>
         </div>
 
@@ -60,101 +114,30 @@ export function Home() {
               <dd>Quant analyst, two papers</dd>
             </div>
             <div>
-              <dt>Bocconi</dt>
-              <dd>Computer Science 30L/30</dd>
+              <dt>TEF Ignition</dt>
+              <dd>Accelerator with Vault Capital</dd>
             </div>
           </dl>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="work-title">
+      <section className="section index-section" aria-label="Sections">
         <div className="wrap">
-          <div className="section-head">
-            <div>
-              <span className="label">Selected work</span>
-              <h2 id="work-title">
-                Built, <strong>tested</strong>, written
-              </h2>
-            </div>
-            <p className="lede">
-              Trading systems, apps and market research. Each one started as a question I wanted to answer with data.
-            </p>
-          </div>
-          <WorkList projects={projects} />
-        </div>
-      </section>
-
-      <section className="section section--raised" aria-labelledby="research-title">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <span className="label">Research</span>
-              <h2 id="research-title">
-                Papers <strong>and reports</strong>
-              </h2>
-            </div>
-            <p className="lede">From debt capital markets to energy shocks and volatility, written alone or with my teams.</p>
-          </div>
-          <PaperGrid articles={articles} />
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="ventures-title">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <span className="label">Ventures</span>
-              <h2 id="ventures-title">
-                Teams <strong>and ideas</strong>
-              </h2>
-            </div>
-            <p className="lede">
-              A research organisation I co-founded, a venture platform I pitched in an accelerator, and an AI product
-              built in 24 hours.
-            </p>
-          </div>
-          <VentureGrid />
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="experience-title">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <span className="label">Experience</span>
-              <h2 id="experience-title">Where I've worked</h2>
-            </div>
-            <Link className="text-link" to="/experiences" style={{ justifySelf: "end" }}>
-              All experience
-              <ArrowRightIcon aria-hidden="true" />
-            </Link>
-          </div>
-          <Timeline />
-        </div>
-      </section>
-
-      <section className="close" aria-labelledby="close-title">
-        <div className="wrap">
-          <span className="label">Contact</span>
-          <h2 id="close-title" style={{ marginTop: 24 }}>
-            Let's <strong>talk.</strong>
-          </h2>
-          <div className="btn-row">
-            <a className="btn btn--solid" href={profile.email}>
-              <EnvelopeClosedIcon aria-hidden="true" />
-              Email me
-            </a>
-            {linkedIn && (
-              <a className="btn btn--ghost" href={linkedIn} target="_blank" rel="noreferrer">
-                <LinkedInLogoIcon aria-hidden="true" />
-                LinkedIn
-              </a>
-            )}
-            <a className="btn btn--ghost" href={profile.cvPath} download>
-              <DownloadIcon aria-hidden="true" />
-              Download CV
-            </a>
-          </div>
+          <ul className="index">
+            {index.map((item, i) => (
+              <li key={item.href} className="index-row">
+                <span className="work-index">{String(i + 1).padStart(2, "0")}</span>
+                <Link to={item.href} className="index-title stretch">
+                  {item.title}
+                </Link>
+                <span className="index-text">{item.text}</span>
+                <span className="index-count">
+                  <span className="num">{item.count}</span> {item.unit}
+                </span>
+                <ArrowTopRightIcon className="work-arrow" aria-hidden="true" />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </>

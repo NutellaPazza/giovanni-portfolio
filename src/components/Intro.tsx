@@ -13,7 +13,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
  */
 
 const TICKER = "GDS";
-const TYPE_AT = [450, 640, 790]; // ms; uneven gaps so it reads like a person typing
+const TYPE_AT = [650, 840, 990]; // ms; uneven gaps so it reads like a person typing
 const STORAGE_KEY = "gds-intro-seen";
 
 type Phase = "typing" | "lookup" | "ready" | "picked" | "leaving";
@@ -88,6 +88,129 @@ function useKeySound() {
   return { unlock, click, enabled };
 }
 
+const GLYPHS = "$%#*+=<>/\\|01GDS";
+const CELL_W = 14;
+const CELL_H = 18;
+const DISSOLVE_MS = 1100;
+
+/**
+ * Background of the intro: faint falling glyphs while the ticker is typed, then, once
+ * `dissolving` turns on, the whole black screen breaks into characters that burn away
+ * from the centre outward and reveal the site underneath.
+ */
+function AsciiField({ dissolving }: { dissolving: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const dissolveRef = useRef(dissolving);
+  dissolveRef.current = dissolving;
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const styles = getComputedStyle(document.documentElement);
+    const ink = styles.getPropertyValue("--ink").trim() || "#ecebe5";
+    const accent = styles.getPropertyValue("--accent").trim() || "#8fd6a0";
+    const black = "#060708";
+
+    let w = 0;
+    let h = 0;
+    let cols = 0;
+    let rows = 0;
+    let drops: number[] = [];
+    let speeds: number[] = [];
+    let thresholds: Float32Array = new Float32Array(0);
+
+    const resize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(w / CELL_W);
+      rows = Math.ceil(h / CELL_H);
+      drops = Array.from({ length: cols }, () => Math.random() * -rows);
+      speeds = Array.from({ length: cols }, () => 0.25 + Math.random() * 0.55);
+      const maxD = Math.hypot(cols / 2, rows / 2);
+      thresholds = new Float32Array(cols * rows);
+      for (let r = 0; r < rows; r += 1) {
+        for (let c = 0; c < cols; c += 1) {
+          const d = Math.hypot(c - cols / 2, (r - rows / 2) * (CELL_H / CELL_W)) / maxD;
+          thresholds[r * cols + c] = Math.min(1, d) * 0.6 + Math.random() * 0.4;
+        }
+      }
+      ctx.fillStyle = black;
+      ctx.fillRect(0, 0, w, h);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    ctx.font = `${CELL_H - 5}px "Geist Mono", ui-monospace, Menlo, monospace`;
+    ctx.textBaseline = "top";
+
+    const glyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+    let frame = 0;
+    let last = 0;
+    let dissolveStart = 0;
+
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+
+      if (dissolveRef.current) {
+        if (!dissolveStart) dissolveStart = now;
+        const t = Math.min(1, (now - dissolveStart) / DISSOLVE_MS);
+        const p = t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; // ease-in-out cubic
+        ctx.clearRect(0, 0, w, h);
+        for (let r = 0; r < rows; r += 1) {
+          for (let c = 0; c < cols; c += 1) {
+            const th = thresholds[r * cols + c];
+            if (th <= p) continue; // gone: the site shows through
+            const x = c * CELL_W;
+            const y = r * CELL_H;
+            ctx.fillStyle = black;
+            ctx.fillRect(x, y, CELL_W, CELL_H);
+            const edge = th - p;
+            if (edge < 0.09) {
+              ctx.globalAlpha = 1 - edge / 0.09;
+              ctx.fillStyle = edge < 0.035 ? accent : ink;
+              ctx.fillText(glyph(), x + 2, y + 2);
+              ctx.globalAlpha = 1;
+            }
+          }
+        }
+        if (t >= 1) cancelAnimationFrame(frame);
+        return;
+      }
+
+      // Rain at ~30 fps: a translucent wash leaves short trails behind each head.
+      if (now - last < 33) return;
+      last = now;
+      ctx.fillStyle = "rgba(6, 7, 8, 0.16)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = accent;
+      for (let c = 0; c < cols; c += 1) {
+        const y = Math.floor(drops[c]) * CELL_H;
+        ctx.globalAlpha = 0.2;
+        ctx.fillText(glyph(), c * CELL_W + 2, y);
+        drops[c] += speeds[c];
+        if (drops[c] > rows && Math.random() > 0.975) drops[c] = Math.random() * -10;
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="intro-field" aria-hidden="true" />;
+}
+
 export function Intro({ onDone }: { onDone: () => void }) {
   const [typed, setTyped] = useState("");
   const [phase, setPhase] = useState<Phase>("typing");
@@ -138,13 +261,13 @@ export function Intro({ onDone }: { onDone: () => void }) {
     timers.current = [];
     setTyped(TICKER);
     setPhase("picked");
-    // Cause, then effect: the row confirms, the hairline runs, the overlay lifts away,
-    // and the hero starts entering while the overlay is still moving.
-    later(() => setPhase("leaving"), 380);
+    // Cause, then effect: the row confirms, then the screen dissolves into characters
+    // from the centre out, and the hero starts entering while the edges are still burning.
+    later(() => setPhase("leaving"), 320);
     later(() => {
       document.documentElement.dataset.intro = "off";
-    }, 380 + 380);
-    later(finish, 380 + 720);
+    }, 320);
+    later(finish, 320 + DISSOLVE_MS + 60);
   }, [phase, unlock, click, finish]);
 
   const skip = useCallback(() => {
@@ -176,7 +299,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="intro" role="dialog" aria-modal="true" aria-label="Intro: ticker lookup" data-leaving={phase === "leaving"}>
-      <span className="intro-progress" data-on={phase === "picked" || phase === "leaving"} aria-hidden="true" />
+      <AsciiField dissolving={phase === "leaving"} />
+      <span className="intro-progress" data-on={phase === "picked"} aria-hidden="true" />
 
       <div className="intro-box">
         <p className="intro-prompt" aria-label={`Ticker ${typed}`}>

@@ -114,8 +114,8 @@ export const experiences: Experience[] = [
     organization: "IMC",
     role: "Prosperity 4 Market-Making Challenge",
     location: "Global / Solo participant",
-    startDate: "2026",
-    endDate: "2026",
+    startDate: "Apr 2026",
+    endDate: "May 2026",
     category: "Competitions",
     summary:
       "Qualified for the final round of IMC's global Prosperity 4 trading challenge as a solo participant, competing in a five-round manual and algorithmic simulation across 18,803 teams.",
