@@ -14,7 +14,6 @@ export function ExperienceDetail() {
   return (
     <article>
       <PageHead
-        code="EXP"
         crumb={{ label: "All experience", href: "/experiences" }}
         title={experience.role}
         lede={`${experience.organization}. ${experience.summary}`}

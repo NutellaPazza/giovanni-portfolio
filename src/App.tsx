@@ -1,7 +1,9 @@
 import { Analytics } from "@vercel/analytics/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { DollarTrail } from "./components/DollarTrail";
 import { Footer } from "./components/Footer";
+import { Intro, shouldShowIntro } from "./components/Intro";
 import { Navbar } from "./components/Navbar";
 import { About } from "./pages/About";
 import { ArticleDetail } from "./pages/ArticleDetail";
@@ -24,8 +26,12 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const [intro, setIntro] = useState(shouldShowIntro);
+
   return (
     <>
+      {intro && <Intro onDone={() => setIntro(false)} />}
+      <DollarTrail />
       <a className="skip-link" href="#main">
         Skip to content
       </a>

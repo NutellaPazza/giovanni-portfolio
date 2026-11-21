@@ -16,7 +16,6 @@ export function ProjectDetail() {
   return (
     <article>
       <PageHead
-        code={project.ticker}
         crumb={{ label: "All work", href: "/projects" }}
         title={project.title}
         lede={project.summary}

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Giovanni De Stasio, finance student at Bocconi University: markets research, trading systems, startups and venture capital."
+      content="Giovanni De Stasio, finance student at Bocconi University. I study financial markets, build trading systems and develop apps."
     />
-    <meta name="theme-color" content="#121620" />
-    <meta property="og:title" content="Giovanni De Stasio | Markets, research and startups" />
+    <meta name="theme-color" content="#0e0f11" />
+    <meta property="og:title" content="Giovanni De Stasio | Markets, trading systems and apps" />
     <meta
       property="og:description"
       content="Finance student at Bocconi. VIX futures research, IMC Prosperity 4 finalist, Head of DCM at Vantedge."
@@ -21,9 +21,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&family=Geist+Mono:wght@400;500&display=swap"
     />
-    <title>Giovanni De Stasio | Markets, research and startups</title>
+    <script>
+      // Decide before first paint whether the GDS intro plays: home page, first visit this
+      // session, motion allowed. Intro.tsx reads this flag.
+      try {
+        var seen = sessionStorage.getItem("gds-intro-seen");
+        var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.documentElement.dataset.intro = location.pathname === "/" && !seen && !calm ? "on" : "off";
+      } catch (e) {
+        document.documentElement.dataset.intro = "off";
+      }
+    </script>
+    <title>Giovanni De Stasio | Markets, trading systems and apps</title>
   </head>
   <body>
     <div id="root"></div>

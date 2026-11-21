@@ -3,20 +3,19 @@ import { Link } from "react-router-dom";
 
 export function NotFound() {
   return (
-    <section className="dark" style={{ minHeight: "70vh" }}>
-      <div className="wrap not-found">
-        <p className="code">404</p>
-        <p className="label">No data for this ticker</p>
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.6rem)", maxWidth: "18ch" }}>This page is not on the board.</h1>
-        <div className="btn-row">
-          <Link className="btn btn--key" to="/">
-            Back to home
-            <ArrowRightIcon aria-hidden="true" />
-          </Link>
-          <Link className="btn btn--line" to="/projects">
-            See all work
-          </Link>
-        </div>
+    <section className="wrap not-found">
+      <span className="label">404 · No result for this ticker</span>
+      <h1 style={{ fontSize: "clamp(3rem, 8vw, 7rem)", fontWeight: 300, letterSpacing: "-0.05em", maxWidth: "12ch" }}>
+        This page <strong style={{ fontWeight: 600 }}>doesn't exist.</strong>
+      </h1>
+      <div className="btn-row">
+        <Link className="btn btn--solid" to="/">
+          Back to home
+          <ArrowRightIcon aria-hidden="true" />
+        </Link>
+        <Link className="btn btn--ghost" to="/projects">
+          See all work
+        </Link>
       </div>
     </section>
   );

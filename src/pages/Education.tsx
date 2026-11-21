@@ -11,11 +11,11 @@ export function Education() {
   return (
     <>
       <PageHead
-        code="EDU"
-        title="Education"
+        eyebrow="Education"
+        title="Bocconi, and before"
         lede="International Economics and Finance at Bocconi, after graduating from a scientific high school two years ahead of the Italian average."
       />
-      <section className="band">
+      <section className="section">
         <div className="wrap">
           {education.map((entry) => {
             const grades = entry.coursework.map(splitGrade).filter((g): g is { name: string; grade: string } => !!g);

@@ -4,7 +4,6 @@ export const projects: Project[] = [
   {
     id: "btc-5-minute-prediction",
     slug: "btc-5-minute-prediction",
-    ticker: "BTC5M",
     title: "BTC 5-Minute Algorithmic Trading System",
     category: "Projects",
     year: "2026",
@@ -30,9 +29,30 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "option-pricing-calculator",
+    slug: "option-pricing-calculator",
+    title: "Option Pricing Calculator",
+    category: "Projects",
+    year: "2025",
+    status: "Open-source app",
+    summary:
+      "A Streamlit app that prices European and American options with Black-Scholes, Monte Carlo and a binomial tree, with Greeks, heatmaps and 11 option strategies.",
+    overview:
+      "An interactive pricing tool that puts three models side by side, so the same option can be priced analytically, by simulation and on a lattice, and the differences become visible.",
+    approach:
+      "Every model sits behind one common interface, so the app and the tests treat them interchangeably. The Monte Carlo engine uses antithetic variates, and the binomial tree checks early exercise at every node for American options.",
+    process: [
+      "Black-Scholes closed form with analytical Greeks.",
+      "Monte Carlo simulation with antithetic variates and confidence intervals.",
+      "Cox-Ross-Rubinstein binomial tree with early exercise, convergence analysis and the early-exercise boundary.",
+      "Sensitivity charts, price and Greek heatmaps, a volatility surface and 11 multi-leg strategies with payoff diagrams.",
+    ],
+    skills: ["Python", "Streamlit", "Options pricing", "Monte Carlo", "Binomial trees"],
+    links: [{ label: "Code on GitHub", href: "https://github.com/NutellaPazza/option-pricing-calculator" }],
+  },
+  {
     id: "vix-strategy",
     slug: "vix-strategy",
-    ticker: "VX2",
     title: "Systematic VIX Futures Risk Research",
     category: "Research",
     year: "2026",
@@ -93,7 +113,6 @@ export const projects: Project[] = [
   {
     id: "who-will-buy-the-debt",
     slug: "who-will-buy-the-debt",
-    ticker: "DCM",
     title: "Who Will Buy the Debt? The Global Bond Sell-Off and the New Price of Capital",
     category: "Research",
     year: "2026",
@@ -117,7 +136,6 @@ export const projects: Project[] = [
   {
     id: "hormuz-shock-market-transmission",
     slug: "hormuz-shock-market-transmission",
-    ticker: "HRMZ",
     title: "The 2026 Hormuz Shock and Its Market Transmission",
     category: "Research",
     year: "2026",
@@ -146,7 +164,6 @@ export const projects: Project[] = [
   {
     id: "macro-financial-assessment-global-regime",
     slug: "macro-financial-assessment-global-regime",
-    ticker: "MACRO",
     title: "Macro-Financial Assessment of the Global Regime",
     category: "Research",
     year: "2026",
@@ -175,7 +192,6 @@ export const projects: Project[] = [
   {
     id: "ai-campus-navigator-innovate",
     slug: "ai-campus-navigator-innovate",
-    ticker: "ACN",
     title: "AI Campus Navigator",
     category: "Hackathons",
     year: "2025",

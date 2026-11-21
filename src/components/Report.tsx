@@ -1,4 +1,4 @@
-import { ArrowRightIcon, ExternalLinkIcon, FileTextIcon } from "@radix-ui/react-icons";
+import { ArrowTopRightIcon, ExternalLinkIcon, FileTextIcon } from "@radix-ui/react-icons";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { LinkItem, RelatedItem } from "../types";
@@ -38,9 +38,9 @@ export function ChipSection({ title, items }: { title: string; items?: string[] 
   if (!items?.length) return null;
   return (
     <ReportSection title={title}>
-      <div className="chip-list">
+      <div className="tags">
         {items.map((item) => (
-          <span className="chip" key={item}>
+          <span className="tag" key={item}>
             {item}
           </span>
         ))}
@@ -55,13 +55,13 @@ export function LinksSection({ title, links, documents }: { title: string; links
     <ReportSection title={title}>
       <div className="link-list">
         {documents?.map((doc) => (
-          <a key={doc.href} className="btn btn--ink btn--small" href={doc.href} target="_blank" rel="noreferrer">
+          <a key={doc.href} className="btn btn--solid btn--small" href={doc.href} target="_blank" rel="noreferrer">
             <FileTextIcon aria-hidden="true" />
             {doc.label}
           </a>
         ))}
         {links?.map((link) => (
-          <a key={link.href} className="btn btn--line btn--small" href={link.href} target="_blank" rel="noreferrer">
+          <a key={link.href} className="btn btn--ghost btn--small" href={link.href} target="_blank" rel="noreferrer">
             {link.label}
             <ExternalLinkIcon aria-hidden="true" />
           </a>
@@ -90,7 +90,7 @@ export function RelatedSection({ title, items }: { title: string; items?: Relate
           <Link key={`${item.kind}-${item.slug}`} to={hrefFor(item)}>
             <span className="label">{item.kind}</span>
             <span>{item.title}</span>
-            <ArrowRightIcon aria-hidden="true" />
+            <ArrowTopRightIcon aria-hidden="true" />
           </Link>
         ))}
       </div>

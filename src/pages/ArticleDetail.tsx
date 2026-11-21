@@ -14,7 +14,6 @@ export function ArticleDetail() {
   return (
     <article>
       <PageHead
-        code="RSCH"
         crumb={{ label: "All work", href: "/projects" }}
         title={article.title}
         lede={article.summary}

@@ -2,42 +2,38 @@
 
 ## Theme
 
-A hiring manager at a fund, bank or VC firm opens the link from LinkedIn on a laptop between calls, in daylight. The first screen must read like opening a trading terminal; everything below must read like a clean fintech product page. So the site alternates dark terminal bands (hero, career timeline, page heads, footer) with light paper reading surfaces.
+"Quiet capital": calm near-black surfaces, warm off-white ink, hairline structure. A recruiter opening the link from LinkedIn should feel a confident, uncluttered fintech-grade page, not a dashboard.
 
 ## Color
 
-OKLCH tokens in `src/styles.css`. Strategy: Committed brand key on two grounds.
+OKLCH tokens in `src/styles.css`. Strategy: Restrained.
 
-- Terminal ground `--term` (blue-black) and paper ground `--paper` (warm off-white).
-- Amber `--amber` is the brand key: function keys, primary buttons, the chart line, focus rings. On paper, text accents use the darker `--amber-ink`.
-- Green `--up` and red `--down` appear only as market signals (returns, drawdowns, grades).
-- The deal-room band uses `--amber-wash` as a full ground for the startup section.
+- Ground `--bg` (near-black), raised sections `--bg-2`, hover surfaces `--bg-3`.
+- Ink `--ink` (warm off-white) with `--ink-2`, `--mute` and `--faint` for hierarchy.
+- One accent, `--accent` (soft green), used sparingly: the live dot, grades, focus rings, a few dollar signs in the cursor trail.
+- A faint film grain over the whole page keeps the dark surfaces from looking flat.
 
 ## Typography
 
-- Schibsted Grotesk (variable 400 to 900) for everything readable. Tight negative tracking on display sizes, weight 760 to 820 for headings.
-- JetBrains Mono only for data: labels, codes, numbers, dates, axis ticks. Tabular figures.
+- Funnel Display for headings: weight 300 for most of a heading, 600 for the emphasised words.
+- Funnel Sans for body copy, Geist Mono only for labels, dates and the intro terminal.
 - Body copy stays under 70 characters per line.
 
 ## Layout
 
-- `.wrap` sets equal edges at every width. Sections are `.band` with fluid vertical padding.
-- Lists of work are tables, not card grids: the positions blotter (projects), filings (research), roles (experience).
-- Term sheets are the only card style, used for ventures.
+- `.wrap` sets equal edges. Sections are separated by hairlines, with generous vertical rhythm.
+- Work is a numbered list, not a card grid; hovering a row floats its cover next to the cursor.
+- Research is a hairline grid of papers; ventures are three outlined panels; experience is a timeline list.
 - Detail pages use a report layout: a mono label column on the left, prose on the right.
-
-## Components
-
-Navbar, Footer, Ticker, EquityTerminal (interactive BT3 equity chart), Blotter, Filings, DealRoom, CareerChart, PageHead, Report sections (text, list, chips, links, related), MediaGallery with lightbox, Tabs (function-key filters).
 
 ## Motion
 
-- Hero and page heads enter once on load with a staggered rise; the equity line draws itself; career bars grow from their start date.
-- The ticker scrolls continuously, pauses on hover and has a pause button.
-- Hover: rows fill with an amber wash from the left, arrows slide, buttons lift 1px and press on click, links draw an underline.
-- All entrance animations use `backwards` fill, so content is visible even if animations never run. Under `prefers-reduced-motion` every animation is off.
-- No data is fetched on a timer; every number is static and real.
+- **Intro** (home page, first visit per session, never under reduced motion): a black terminal types the ticker GDS, a lookup row resolves it to Giovanni De Stasio, Enter (or the Open button) confirms it, a hairline runs, the overlay lifts away and the hero enters. Key clicks are synthesised with WebAudio and play once the visitor has pressed a key or tapped. Skip and Escape end it at once.
+- **Hero** entrance: one staggered rise, held until the intro has gone.
+- **Dollar trail**: dollar signs follow a fine pointer, inherit some of its velocity, fall and fade; a click releases a small burst. Pooled elements, one requestAnimationFrame loop that stops when idle.
+- **Hover**: list rows dim their siblings and slide, arrows move up-right, buttons press on click, links draw an underline, photos zoom slightly.
+- All entrances use backwards fill, so content is visible even if animations never run. Under `prefers-reduced-motion` everything is static.
 
 ## Imagery
 
-Real photographs only: the portrait, hobby photos, project covers and research charts. Photos sit in rounded frames and zoom slightly on hover.
+Real photographs only: the portrait, hobby photos, project covers and research charts.

@@ -6,12 +6,12 @@ export function Footer() {
   const external = profile.social.filter((item) => !item.href.startsWith("mailto:"));
 
   return (
-    <footer className="site-footer dark">
+    <footer className="site-footer">
       <div className="wrap">
         <div className="footer-grid">
           <div>
-            <p className="label">Milan · Bocconi University</p>
-            <h2>Markets, research and startups, built in public.</h2>
+            <p className="label">GDS · Milan</p>
+            <p className="big">Markets, trading systems and apps.</p>
           </div>
           <div className="footer-links">
             <p className="label">Contact</p>

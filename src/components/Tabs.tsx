@@ -5,14 +5,14 @@ type TabsProps<T extends string> = {
   label: string;
 };
 
-/** Filter keys styled like terminal function keys. They filter one list, so they act as toggle buttons. */
+/** Pill filters for one list; each one is a toggle button. */
 export function Tabs<T extends string>({ tabs, active, onChange, label }: TabsProps<T>) {
   return (
-    <div className="fkeys" role="group" aria-label={label}>
+    <div className="filters" role="group" aria-label={label}>
       {tabs.map((tab) => (
         <button key={tab.id} type="button" aria-pressed={active === tab.id} onClick={() => onChange(tab.id)}>
           {tab.label}
-          <span className="count num">{tab.count}</span>
+          <span className="count">{tab.count}</span>
         </button>
       ))}
     </div>

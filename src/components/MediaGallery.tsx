@@ -53,7 +53,7 @@ export function MediaGallery({ items = [], featuredItem }: MediaGalleryProps) {
       )}
 
       {!!items.length && (
-        <div className="gallery" style={{ marginBottom: "clamp(40px, 6vw, 72px)" }}>
+        <div className="gallery">
           {items.map((item, index) => (
             <div key={item.src} className="gallery-item">
               <figure>
@@ -80,19 +80,19 @@ export function MediaGallery({ items = [], featuredItem }: MediaGalleryProps) {
               <span className="num">
                 {(active ?? 0) + 1} / {all.length}
               </span>
-              {current.caption && <span style={{ flex: 1, color: "var(--term-muted)" }}>{current.caption}</span>}
+              {current.caption && <span style={{ flex: 1 }}>{current.caption}</span>}
               <div className="btn-row">
                 {all.length > 1 && (
                   <>
-                    <button type="button" className="btn btn--line btn--small dark" onClick={() => step(-1)} aria-label="Previous image">
+                    <button type="button" className="btn btn--ghost btn--small" onClick={() => step(-1)} aria-label="Previous image">
                       <ArrowLeftIcon aria-hidden="true" />
                     </button>
-                    <button type="button" className="btn btn--line btn--small dark" onClick={() => step(1)} aria-label="Next image">
+                    <button type="button" className="btn btn--ghost btn--small" onClick={() => step(1)} aria-label="Next image">
                       <ArrowRightIcon aria-hidden="true" />
                     </button>
                   </>
                 )}
-                <button ref={closeRef} type="button" className="btn btn--key btn--small" onClick={() => setActive(null)}>
+                <button ref={closeRef} type="button" className="btn btn--solid btn--small" onClick={() => setActive(null)}>
                   <Cross2Icon aria-hidden="true" />
                   Close
                 </button>

@@ -21,12 +21,12 @@ export function About() {
   return (
     <>
       <PageHead
-        code="BIO"
+        eyebrow="About"
         title="The person behind the numbers"
         lede="Curious, restless and close to the things that make life feel larger. This is the part of me a CV leaves out."
       />
 
-      <section className="band">
+      <section className="section">
         <div className="wrap story">
           <div>
             <p className="label">My story</p>
@@ -51,9 +51,9 @@ export function About() {
         </div>
       </section>
 
-      <section className="band band--tint">
+      <section className="section section--raised">
         <div className="wrap">
-          <div className="band-head">
+          <div className="section-head">
             <div>
               <p className="label">Passions and hobbies</p>
               <h2>The worlds I like to live through</h2>

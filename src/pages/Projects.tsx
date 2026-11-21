@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Blotter } from "../components/Blotter";
+import { WorkList } from "../components/Lists";
 import { PageHead } from "../components/PageHead";
 import { Tabs } from "../components/Tabs";
 import { projects } from "../data/projects";
@@ -21,11 +21,11 @@ export function Projects() {
   return (
     <>
       <PageHead
-        code="WORK"
-        title="Projects and research"
-        lede="Trading systems, market research and startup builds. Each one began as a question I wanted to test with real data."
+        eyebrow="Work"
+        title="Trading systems, apps and research"
+        lede="Each one started as a question I wanted to answer with data."
       />
-      <section className="band">
+      <section className="section">
         <div className="wrap">
           <Tabs
             label="Filter by type"
@@ -36,7 +36,7 @@ export function Projects() {
               count: filter.id === "All" ? projects.length : projects.filter((p) => p.category === filter.id).length,
             }))}
           />
-          <Blotter projects={visible} label={`${active} projects`} />
+          <WorkList projects={visible} />
         </div>
       </section>
     </>
