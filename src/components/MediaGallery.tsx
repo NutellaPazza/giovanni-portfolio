@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, type TouchEvent } from "react";
+import { ArrowLeftIcon, ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 import type { MediaItem } from "../types";
 
 type MediaGalleryProps = {
@@ -6,112 +7,96 @@ type MediaGalleryProps = {
   featuredItem?: MediaItem;
 };
 
-export function MediaGallery({ items, featuredItem }: MediaGalleryProps) {
-  const galleryItems = items ?? [];
-  const lightboxItems = useMemo(
-    () => (featuredItem ? [featuredItem, ...galleryItems] : galleryItems),
-    [featuredItem, galleryItems],
-  );
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+export function MediaGallery({ items = [], featuredItem }: MediaGalleryProps) {
+  const all = featuredItem ? [featuredItem, ...items] : items;
+  const [active, setActive] = useState<number | null>(null);
+  const touchX = useRef<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
 
-  const activeItem = activeIndex === null ? null : lightboxItems[activeIndex];
-
-  const showPrevious = () => {
-    setActiveIndex((current) => (current === null ? current : (current - 1 + lightboxItems.length) % lightboxItems.length));
-  };
-
-  const showNext = () => {
-    setActiveIndex((current) => (current === null ? current : (current + 1) % lightboxItems.length));
-  };
+  const step = (delta: number) => setActive((current) => (current === null ? current : (current + delta + all.length) % all.length));
 
   useEffect(() => {
-    if (activeIndex === null) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveIndex(null);
-      if (event.key === "ArrowLeft") showPrevious();
-      if (event.key === "ArrowRight") showNext();
+    if (active === null) return;
+    closeRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActive(null);
+      if (event.key === "ArrowLeft") step(-1);
+      if (event.key === "ArrowRight") step(1);
     };
-
-    document.addEventListener("keydown", onKeyDown);
-    const previousOverflow = document.body.style.overflow;
+    document.addEventListener("keydown", onKey);
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
     return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
     };
-  }, [activeIndex, lightboxItems.length]);
+  }, [active, all.length]);
 
-  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    if (touchStartX === null || lightboxItems.length < 2) return;
-
-    const deltaX = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(deltaX) > 44) {
-      if (deltaX > 0) showPrevious();
-      else showNext();
-    }
-    setTouchStartX(null);
+  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchX.current === null || all.length < 2) return;
+    const delta = event.changedTouches[0].clientX - touchX.current;
+    if (Math.abs(delta) > 44) step(delta > 0 ? -1 : 1);
+    touchX.current = null;
   };
 
-  if (!featuredItem && !galleryItems.length) return null;
+  if (!all.length) return null;
+  const current = active === null ? null : all[active];
 
   return (
     <>
       {featuredItem && (
-        <figure className="detail-cover">
-          <button className="media-open detail-cover-button" type="button" onClick={() => setActiveIndex(0)}>
+        <figure className="cover">
+          <button type="button" onClick={() => setActive(0)} aria-label={`Enlarge: ${featuredItem.alt}`}>
             <img src={featuredItem.src} alt={featuredItem.alt} />
           </button>
-          {featuredItem.caption && <figcaption>{featuredItem.caption}</figcaption>}
         </figure>
       )}
 
-      {!!galleryItems.length && (
-        <div className="media-gallery">
-          {galleryItems.map((item, index) => (
-            <figure key={`${item.src}-${item.alt}`}>
-              <button
-                className="media-open"
-                type="button"
-                onClick={() => setActiveIndex(featuredItem ? index + 1 : index)}
-              >
-                <img src={item.src} alt={item.alt} loading="lazy" />
-              </button>
-              {item.caption && <figcaption>{item.caption}</figcaption>}
-            </figure>
+      {!!items.length && (
+        <div className="gallery" style={{ marginBottom: "clamp(40px, 6vw, 72px)" }}>
+          {items.map((item, index) => (
+            <div key={item.src} className="gallery-item">
+              <figure>
+                <button type="button" onClick={() => setActive(featuredItem ? index + 1 : index)} aria-label={`Enlarge: ${item.alt}`}>
+                  <img src={item.src} alt={item.alt} loading="lazy" />
+                </button>
+              </figure>
+              {item.caption && <p className="gallery-note">{item.caption}</p>}
+            </div>
           ))}
         </div>
       )}
 
-      {activeItem && (
-        <div className="lightbox-backdrop" role="dialog" aria-modal="true" aria-label="Project image viewer" onClick={() => setActiveIndex(null)}>
+      {current && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" onClick={() => setActive(null)}>
           <div
             className="lightbox-panel"
             onClick={(event) => event.stopPropagation()}
-            onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
-            onTouchEnd={handleTouchEnd}
+            onTouchStart={(event) => (touchX.current = event.touches[0].clientX)}
+            onTouchEnd={onTouchEnd}
           >
-            <button className="lightbox-close" type="button" onClick={() => setActiveIndex(null)}>
-              Close
-            </button>
-            {lightboxItems.length > 1 && (
-              <button className="lightbox-nav lightbox-nav--prev" type="button" onClick={showPrevious}>
-                Previous
-              </button>
-            )}
-            <img className="lightbox-image" src={activeItem.src} alt={activeItem.alt} />
-            {lightboxItems.length > 1 && (
-              <button className="lightbox-nav lightbox-nav--next" type="button" onClick={showNext}>
-                Next
-              </button>
-            )}
-            <div className="lightbox-meta">
-              <span>
-                {(activeIndex ?? 0) + 1} / {lightboxItems.length}
+            <img src={current.src} alt={current.alt} />
+            <div className="lightbox-bar">
+              <span className="num">
+                {(active ?? 0) + 1} / {all.length}
               </span>
-              {activeItem.caption && <p>{activeItem.caption}</p>}
+              {current.caption && <span style={{ flex: 1, color: "var(--term-muted)" }}>{current.caption}</span>}
+              <div className="btn-row">
+                {all.length > 1 && (
+                  <>
+                    <button type="button" className="btn btn--line btn--small dark" onClick={() => step(-1)} aria-label="Previous image">
+                      <ArrowLeftIcon aria-hidden="true" />
+                    </button>
+                    <button type="button" className="btn btn--line btn--small dark" onClick={() => step(1)} aria-label="Next image">
+                      <ArrowRightIcon aria-hidden="true" />
+                    </button>
+                  </>
+                )}
+                <button ref={closeRef} type="button" className="btn btn--key btn--small" onClick={() => setActive(null)}>
+                  <Cross2Icon aria-hidden="true" />
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

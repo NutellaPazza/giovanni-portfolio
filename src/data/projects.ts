@@ -4,6 +4,7 @@ export const projects: Project[] = [
   {
     id: "btc-5-minute-prediction",
     slug: "btc-5-minute-prediction",
+    ticker: "BTC5M",
     title: "BTC 5-Minute Algorithmic Trading System",
     category: "Projects",
     year: "2026",
@@ -31,6 +32,7 @@ export const projects: Project[] = [
   {
     id: "vix-strategy",
     slug: "vix-strategy",
+    ticker: "VX2",
     title: "Systematic VIX Futures Risk Research",
     category: "Research",
     year: "2026",
@@ -91,6 +93,7 @@ export const projects: Project[] = [
   {
     id: "who-will-buy-the-debt",
     slug: "who-will-buy-the-debt",
+    ticker: "DCM",
     title: "Who Will Buy the Debt? The Global Bond Sell-Off and the New Price of Capital",
     category: "Research",
     year: "2026",
@@ -114,6 +117,7 @@ export const projects: Project[] = [
   {
     id: "hormuz-shock-market-transmission",
     slug: "hormuz-shock-market-transmission",
+    ticker: "HRMZ",
     title: "The 2026 Hormuz Shock and Its Market Transmission",
     category: "Research",
     year: "2026",
@@ -142,6 +146,7 @@ export const projects: Project[] = [
   {
     id: "macro-financial-assessment-global-regime",
     slug: "macro-financial-assessment-global-regime",
+    ticker: "MACRO",
     title: "Macro-Financial Assessment of the Global Regime",
     category: "Research",
     year: "2026",
@@ -170,6 +175,7 @@ export const projects: Project[] = [
   {
     id: "ai-campus-navigator-innovate",
     slug: "ai-campus-navigator-innovate",
+    ticker: "ACN",
     title: "AI Campus Navigator",
     category: "Hackathons",
     year: "2025",

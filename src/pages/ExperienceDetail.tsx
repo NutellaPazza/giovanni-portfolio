@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
-import { DocumentLink } from "../components/DocumentLink";
 import { MediaGallery } from "../components/MediaGallery";
-import { RelatedContent } from "../components/RelatedContent";
-import { SkillTag } from "../components/SkillTag";
+import { PageHead } from "../components/PageHead";
+import { ChipSection, LinksSection, ListSection, RelatedSection, TextSection } from "../components/Report";
 import { experiences } from "../data/experiences";
 import { NotFound } from "./NotFound";
 
@@ -13,79 +12,40 @@ export function ExperienceDetail() {
   if (!experience) return <NotFound />;
 
   return (
-    <article className="detail-page">
-      <header className="detail-hero">
-        <div>
-          <p className="eyebrow">{experience.category}</p>
-          <h1>{experience.role}</h1>
-          <p>{experience.organization}</p>
+    <article>
+      <PageHead
+        code="EXP"
+        crumb={{ label: "All experience", href: "/experiences" }}
+        title={experience.role}
+        lede={`${experience.organization}. ${experience.summary}`}
+        facts={[
+          {
+            label: "Period",
+            value:
+              experience.startDate === experience.endDate
+                ? experience.endDate
+                : `${experience.startDate} to ${experience.endDate}`,
+          },
+          { label: "Location", value: experience.location },
+          { label: "Type", value: experience.category },
+        ]}
+      />
+
+      <div className="report">
+        <div className="wrap">
+          <MediaGallery featuredItem={experience.image} items={experience.gallery} />
+          <TextSection title="Overview" content={experience.overview} />
+          <ListSection title="What I did" items={experience.responsibilities} />
+          <ListSection title="Key work" items={experience.contributions} />
+          <TextSection title="What I learned" content={experience.learned} />
+          <ChipSection title="Skills" items={experience.skills} />
+          <LinksSection title="Read more" links={experience.links} documents={experience.documents} />
+          <RelatedSection
+            title="Related"
+            items={[...(experience.relatedArticles ?? []), ...(experience.relatedProjects ?? [])]}
+          />
         </div>
-        <dl>
-          <div><dt>Period</dt><dd>{experience.startDate} to {experience.endDate}</dd></div>
-          <div><dt>Location</dt><dd>{experience.location}</dd></div>
-          <div><dt>Category</dt><dd>{experience.category}</dd></div>
-        </dl>
-      </header>
-
-      {experience.image && (
-        <figure className="detail-cover">
-          <img src={experience.image.src} alt={experience.image.alt} />
-          {experience.image.caption && <figcaption>{experience.image.caption}</figcaption>}
-        </figure>
-      )}
-
-      <DetailSection title="Overview" content={experience.overview} />
-      <ListSection title="What I did" items={experience.responsibilities} />
-      <ListSection title="Key work and contributions" items={experience.contributions} />
-      <DetailSection title="What I learned" content={experience.learned} />
-
-      <section className="detail-section">
-        <h2>Skills used</h2>
-        <div className="tag-list">
-          {experience.skills.map((skill) => (
-            <SkillTag key={skill} label={skill} />
-          ))}
-        </div>
-      </section>
-
-      {!!experience.documents?.length && (
-        <section className="detail-section">
-          <h2>Documents</h2>
-          <div className="document-list">
-            {experience.documents.map((document) => (
-              <DocumentLink key={document.label} item={document} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <MediaGallery items={experience.gallery} />
-      <RelatedContent title="Related projects" items={experience.relatedProjects} />
-      <RelatedContent title="Related articles" items={experience.relatedArticles} />
+      </div>
     </article>
-  );
-}
-
-function DetailSection({ title, content }: { title: string; content?: string }) {
-  if (!content) return null;
-  return (
-    <section className="detail-section">
-      <h2>{title}</h2>
-      <p>{content}</p>
-    </section>
-  );
-}
-
-function ListSection({ title, items }: { title: string; items?: string[] }) {
-  if (!items?.length) return null;
-  return (
-    <section className="detail-section">
-      <h2>{title}</h2>
-      <ul>
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </section>
   );
 }

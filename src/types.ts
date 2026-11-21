@@ -50,6 +50,8 @@ export type Experience = {
 export type Project = {
   id: string;
   slug: string;
+  /** Short terminal-style code shown in the positions blotter, e.g. "VX2". */
+  ticker: string;
   title: string;
   category: "Projects" | "Research" | "Hackathons";
   year: string;

@@ -1,28 +1,44 @@
 import { useState } from "react";
-import { ProjectCard } from "../components/Cards";
+import { Blotter } from "../components/Blotter";
+import { PageHead } from "../components/PageHead";
 import { Tabs } from "../components/Tabs";
 import { projects } from "../data/projects";
 import type { Project } from "../types";
 
-const tabs: Project["category"][] = ["Projects", "Research", "Hackathons"];
+type Filter = "All" | Project["category"];
+
+const filters: { id: Filter; label: string }[] = [
+  { id: "All", label: "All" },
+  { id: "Projects", label: "Builds" },
+  { id: "Research", label: "Research" },
+  { id: "Hackathons", label: "Hackathons" },
+];
 
 export function Projects() {
-  const [active, setActive] = useState<Project["category"]>("Projects");
-  const visible = projects.filter((project) => project.category === active);
+  const [active, setActive] = useState<Filter>("All");
+  const visible = active === "All" ? projects : projects.filter((project) => project.category === active);
 
   return (
-    <div className="page">
-      <section className="page-hero">
-        <h1>Projects</h1>
-      </section>
-      <section className="section">
-        <Tabs tabs={tabs} active={active} onChange={setActive} label="Project categories" />
-        <div className="project-list">
-          {visible.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+    <>
+      <PageHead
+        code="WORK"
+        title="Projects and research"
+        lede="Trading systems, market research and startup builds. Each one began as a question I wanted to test with real data."
+      />
+      <section className="band">
+        <div className="wrap">
+          <Tabs
+            label="Filter by type"
+            active={active}
+            onChange={setActive}
+            tabs={filters.map((filter) => ({
+              ...filter,
+              count: filter.id === "All" ? projects.length : projects.filter((p) => p.category === filter.id).length,
+            }))}
+          />
+          <Blotter projects={visible} label={`${active} projects`} />
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -1,3 +1,5 @@
+import { PageHead } from "../components/PageHead";
+
 const hobbies = [
   {
     title: "Stories, cinema, comics, manga, anime, and games",
@@ -17,48 +19,53 @@ const hobbies = [
 
 export function About() {
   return (
-    <div className="page">
-      <section className="page-hero page-hero--about">
-        <div>
-          <p className="eyebrow">About</p>
-          <h1>The person behind.</h1>
+    <>
+      <PageHead
+        code="BIO"
+        title="The person behind the numbers"
+        lede="Curious, restless and close to the things that make life feel larger. This is the part of me a CV leaves out."
+      />
+
+      <section className="band">
+        <div className="wrap story">
+          <div>
+            <p className="label">My story</p>
+            <h2 style={{ marginTop: 14 }}>A life led by dreams that kept changing shape.</h2>
+          </div>
+          <div className="prose">
+            <p>
+              Since I was a child, I have always wanted to do something meaningful. More than that, I have always wanted to
+              live with dreams and passions, even when those dreams changed over time.
+            </p>
+            <p>
+              When I was little, I wanted to become a mad scientist. Later, as I started studying physics, I imagined myself
+              following that path more seriously. Then I became interested in finance and economics, and I chose to move in
+              that direction without really knowing whether it would be the road that would help me build the life I had in
+              mind.
+            </p>
+            <p>
+              I still do not know that for sure. I think life has to be lived fully, not passively, but with awareness of the
+              choices we make and the consequences they create. Without that, there is no future worth building.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="story-section">
-        <div>
-          <p className="eyebrow">My story</p>
-          <h2>A life led by dreams that kept changing shape.</h2>
-        </div>
-        <div className="story-copy">
-          <p>
-            Since I was a child, I have always wanted to do something meaningful. More than that, I have always wanted to
-            live with dreams and passions, even when those dreams changed over time.
-          </p>
-          <p>
-            When I was little, I wanted to become a mad scientist. Later, as I started studying physics, I imagined myself
-            following that path more seriously. Then I became interested in finance and economics, and I chose to move in
-            that direction without really knowing whether it would be the road that would help me build the life I had in
-            mind.
-          </p>
-          <p>
-            I still do not know that for sure. I think life has to be lived fully, not passively, but with awareness of the
-            choices we make and the consequences they create. Without that, there is no future worth building.
-          </p>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="compact-heading">
-          <p className="eyebrow">Passions and hobbies</p>
-          <h2>The worlds I like to live through.</h2>
-        </div>
-        <div className="hobby-stack">
+      <section className="band band--tint">
+        <div className="wrap">
+          <div className="band-head">
+            <div>
+              <p className="label">Passions and hobbies</p>
+              <h2>The worlds I like to live through</h2>
+            </div>
+          </div>
           {hobbies.map((hobby, index) => (
-            <article className={index % 2 ? "hobby-row hobby-row--reverse" : "hobby-row"} key={hobby.title}>
-              <img src={hobby.image} alt={hobby.alt} loading="lazy" />
+            <article className={index % 2 ? "hobby hobby--flip" : "hobby"} key={hobby.title}>
+              <figure>
+                <img src={hobby.image} alt={hobby.alt} loading="lazy" />
+              </figure>
               <div>
-                <p className="eyebrow">Personal</p>
+                <p className="label">{String(index + 1).padStart(2, "0")}</p>
                 <h3>{hobby.title}</h3>
                 <p>{hobby.description}</p>
               </div>
@@ -66,7 +73,6 @@ export function About() {
           ))}
         </div>
       </section>
-
-    </div>
+    </>
   );
 }

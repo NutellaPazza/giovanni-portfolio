@@ -1,7 +1,7 @@
-import { Route, Routes, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Footer } from "./components/Footer";
-import { MoneyTrail } from "./components/MoneyTrail";
 import { Navbar } from "./components/Navbar";
 import { About } from "./pages/About";
 import { ArticleDetail } from "./pages/ArticleDetail";
@@ -12,7 +12,6 @@ import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { ProjectDetail } from "./pages/ProjectDetail";
 import { Projects } from "./pages/Projects";
-import { useEffect } from "react";
 
 function ScrollToTop() {
   const location = useLocation();
@@ -27,10 +26,12 @@ function ScrollToTop() {
 export default function App() {
   return (
     <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
       <ScrollToTop />
-      <MoneyTrail />
       <Navbar />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

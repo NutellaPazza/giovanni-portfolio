@@ -1,40 +1,44 @@
 import { Link } from "react-router-dom";
 import { profile } from "../data/profile";
-
-const footerNav = [
-  { label: "About", href: "/about" },
-  { label: "Experiences", href: "/experiences" },
-  { label: "Projects", href: "/projects" },
-  { label: "Education", href: "/education" },
-];
+import { navItems } from "./Navbar";
 
 export function Footer() {
+  const external = profile.social.filter((item) => !item.href.startsWith("mailto:"));
+
   return (
-    <footer className="site-footer">
-      <div className="footer-grid">
-        <div>
-          <p className="eyebrow">{profile.name}</p>
-          <h2>Markets, research, projects, and competitions.</h2>
-        </div>
-        <div className="footer-links">
-          <a href={profile.email}>Email</a>
-          {profile.social
-            .filter((item) => item.label !== "Email")
-            .map((item) => (
-              <a key={item.label} href={item.href.startsWith("[") ? "#" : item.href}>
+    <footer className="site-footer dark">
+      <div className="wrap">
+        <div className="footer-grid">
+          <div>
+            <p className="label">Milan · Bocconi University</p>
+            <h2>Markets, research and startups, built in public.</h2>
+          </div>
+          <div className="footer-links">
+            <p className="label">Contact</p>
+            <a href={profile.email}>Email</a>
+            {external.map((item) => (
+              <a key={item.label} href={item.href} target="_blank" rel="noreferrer">
                 {item.label}
               </a>
             ))}
+          </div>
+          <div className="footer-links">
+            <p className="label">Site</p>
+            {navItems.map((item) => (
+              <Link key={item.href} to={item.href}>
+                {item.label}
+              </Link>
+            ))}
+            <a href={profile.cvPath} download>
+              CV (PDF)
+            </a>
+          </div>
         </div>
-        <div className="footer-links">
-          {footerNav.map((item) => (
-            <Link key={item.href} to={item.href}>
-              {item.label}
-            </Link>
-          ))}
+        <div className="footer-base">
+          <span>© {new Date().getFullYear()} {profile.name}</span>
+          <span>Backtest figures are historical simulations, not investment advice.</span>
         </div>
       </div>
-      <p className="copyright">Copyright {new Date().getFullYear()} {profile.name}.</p>
     </footer>
   );
 }
