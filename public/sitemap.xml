@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://example.com/</loc></url>
-  <url><loc>https://example.com/about</loc></url>
-  <url><loc>https://example.com/experiences</loc></url>
-  <url><loc>https://example.com/projects</loc></url>
-  <url><loc>https://example.com/education</loc></url>
+  <url><loc>https://giovanni-portfolio-rho.vercel.app/</loc></url>
+  <url><loc>https://giovanni-portfolio-rho.vercel.app/about</loc></url>
+  <url><loc>https://giovanni-portfolio-rho.vercel.app/experiences</loc></url>
+  <url><loc>https://giovanni-portfolio-rho.vercel.app/projects</loc></url>
+  <url><loc>https://giovanni-portfolio-rho.vercel.app/education</loc></url>
 </urlset>
